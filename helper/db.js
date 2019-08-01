@@ -5,5 +5,8 @@ module.exports = () =>{
         .then(() => console.log("MongoDB: Connected"))
         .catch((err) => console.log("MongoDB:",err));
 
+    mongoose.set('useCreateIndex', true);
+
+
     mongoose.Promise = global.Promise;
 };
