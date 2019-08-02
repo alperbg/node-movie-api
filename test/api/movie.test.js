@@ -85,6 +85,35 @@ describe('/api/movies tests',() => {
                     done();
                 })
         })
-    })
+    });
+
+    describe('/PUT/:director_id  movie', () => {
+        it('it should UPDATE a movie given by id',(done) => {
+            const movie = {
+                title: 'put_test',
+                director_id : "5d41a0e69624c22b4cfc4b42",
+                category: 'test_category_put',
+                country: 'test_country_put',
+                year: 1970,
+                imdb_score: 8
+            };
+
+            chai.request(server)
+                .put('/api/movies/'+movieId)
+                .send(movie)
+                .set('x-access-token',token)
+                .end((err,res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title').eql(movie.title);
+                    res.body.should.have.property('director_id').eql(movie.director_id);
+                    res.body.should.have.property('category').eql(movie.category);
+                    res.body.should.have.property('country').eql(movie.country);
+                    res.body.should.have.property('year').eql(movie.year);
+                    res.body.should.have.property('imdb_score').eql(movie.imdb_score);
+                    done();
+                });
+        });
+    });
 
 });
