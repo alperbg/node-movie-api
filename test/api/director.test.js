@@ -10,6 +10,7 @@ let token
 
 describe('/api/directors tests',() => {
 
+    // Taking token before tests
     before((done) => {
         chai.request(server)
         .post('/authenticate')
@@ -23,6 +24,7 @@ describe('/api/directors tests',() => {
         });
     });
 
+    // GET test
     describe('/GET directors',() => {
         it('it should GET all the directors',(done) =>{
             chai.request(server)
@@ -36,6 +38,7 @@ describe('/api/directors tests',() => {
         });
     });
 
+    // POST test
     describe('/POST director',() => {
         it('it should POST a director',(done) => {
             const test_director = {
@@ -43,7 +46,6 @@ describe('/api/directors tests',() => {
                 surname: 'Test_director_surname',
                 bio: 'Test_director_biooooooooooooooooooooooooooooooooooooooooooo'
             };
-
             chai.request(server)
             .post('/api/directors')
             .send(test_director)
@@ -60,6 +62,7 @@ describe('/api/directors tests',() => {
         });
     });
 
+    // GET test
     describe('/GET/:director_id director',() => {
         it('it should GET a director by the given id',(done) => {
             chai.request(server)
@@ -77,6 +80,7 @@ describe('/api/directors tests',() => {
         });
     });
 
+    // PUT test
     describe('/PUT/:director_id director',() => {
         it('it should UPDATE a director given by id',(done) => {
             const test_director = {
@@ -95,6 +99,21 @@ describe('/api/directors tests',() => {
                 res.body.should.have.property('name').eql(test_director.name);
                 res.body.should.have.property('surname').eql(test_director.surname);
                 res.body.should.have.property('bio').eql(test_director.bio);
+                done();
+            });
+        });
+    });
+
+    // DELETE test
+    describe('/DELETE/:director director',() => {
+        it('it should DELETE a director given by id', (done) => {
+            chai.request(server)
+            .delete('/api/directors/'+directorId)
+            .set('x-access-token',token)
+            .end((err,res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('status').eql(1);
                 done();
             });
         });

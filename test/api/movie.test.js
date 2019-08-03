@@ -7,8 +7,10 @@ chai.use(chaiHttp);
 
 let token,movieId;
 
+
 describe('/api/movies tests',() => {
 
+    // Taking token before tests
     before((done) => {
         chai.request(server)
             .post('/authenticate')
@@ -18,11 +20,11 @@ describe('/api/movies tests',() => {
             })
             .end((err,res) => {
                 token = res.body.token;
-                //console.log(token);
                 done()
             });
     });
 
+    // GET test
     describe('/GET movies',() => {
         it('it should GET all the movies', (done) => {
             chai.request(server)
@@ -36,6 +38,7 @@ describe('/api/movies tests',() => {
         })
     });
 
+    // POST test
     describe('/POST movie',() => {
         it('it should POST a movie',(done) => {
             const movie = {
@@ -66,6 +69,7 @@ describe('/api/movies tests',() => {
         });
     });
 
+    // GET test
     describe('/GET/:movie_id movie', () => {
         it('it should GET a movie by the given id',(done) => {
             chai.request(server)
@@ -81,12 +85,12 @@ describe('/api/movies tests',() => {
                     res.body.should.have.property('year');
                     res.body.should.have.property('imdb_score');
                     res.body.should.have.property('_id').eql(movieId);
-
                     done();
                 })
         })
     });
 
+    // PUT test
     describe('/PUT/:movie_id  movie', () => {
         it('it should UPDATE a movie given by id',(done) => {
             const movie = {
@@ -116,8 +120,9 @@ describe('/api/movies tests',() => {
         });
     });
 
+    // DELETE test
     describe('/DELETE/:movie_id  movie', () => {
-        it('it should DELET a movie given by id',(done) => {
+        it('it should DELETE a movie given by id', (done) => {
         
             chai.request(server)
                 .delete('/api/movies/'+movieId)
