@@ -59,4 +59,21 @@ describe('/api/directors tests',() => {
             });
         });
     });
+
+    describe('/GET/:director_id director',() => {
+        it('it should GET a director by the given id',(done) => {
+            chai.request(server)
+            .get('/api/directors/'+directorId)
+            .set('x-access-token',token)
+            .end((err,res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('array');
+                res.body[0].should.have.property('name');
+                res.body[0].should.have.property('surname');
+                res.body[0].should.have.property('bio');
+                res.body[0].should.have.property('_id').eql(directorId);
+                done();
+            });
+        });
+    });
 });
