@@ -66,7 +66,7 @@ describe('/api/movies tests',() => {
         });
     });
 
-    describe('/GET/:director_id movie', () => {
+    describe('/GET/:movie movie', () => {
         it('it should GET a movie by the given id',(done) => {
             chai.request(server)
                 .get('/api/movies/'+movieId)
@@ -87,7 +87,7 @@ describe('/api/movies tests',() => {
         })
     });
 
-    describe('/PUT/:director_id  movie', () => {
+    describe('/PUT/:movie  movie', () => {
         it('it should UPDATE a movie given by id',(done) => {
             const movie = {
                 title: 'put_test',
@@ -116,4 +116,18 @@ describe('/api/movies tests',() => {
         });
     });
 
+    describe('/DELETE/:movie  movie', () => {
+        it('it should DELET a movie given by id',(done) => {
+        
+            chai.request(server)
+                .delete('/api/movies/'+movieId)
+                .set('x-access-token',token)
+                .end((err,res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('status').eql(1);
+                    done();
+                });
+        });
+    });
 });
