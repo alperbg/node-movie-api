@@ -1,7 +1,7 @@
-laguage: node_js
+language: node_js
 node_js:
- -10.16.0
- before_install:
+  - "10.16.0"
+before_install:
   - npm install
   - export NODE_ENV=production
 script:
