@@ -1,3 +1,4 @@
+[![Build Status](https://api.travis-ci.org/4ppe/node-movie-api.svg)](https://travis-ci.org/4ppe/node-movie-api/builds/)
 
 # Movies
 
